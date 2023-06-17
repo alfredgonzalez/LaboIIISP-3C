@@ -433,6 +433,7 @@
         window.addEventListener("load", () => {       
             mostrarSpinner();
             getVehiculos();
+            $("txtId").disabled = 'true';
         });
 
       
@@ -587,19 +588,17 @@
 
             
             $formulario.style.display = 'none';
-            $("legendABM").style.display = 'none';
-            $("txtId").disabled = 'true';
+            $("legendABM").style.display = 'none';       
             $divTabla.style.display = 'block'
             $divTabla.style.display = 'center';
             $btnAgregar.style.display = 'block';
-            ocultarSpinner();
             
         }
        
 
         function validarDatosAereo(modelo, anoFab, velMax, altMax, autonomia)
         {
-            if(modelo != null && anoFab > 1885 && 
+            if(modelo != null && modelo != "" && anoFab > 1885 && 
                 velMax > 0 && altMax > 0 && autonomia > 0 )
                {
                     return false
@@ -609,7 +608,7 @@
 
         function validarDatosTerrestre(modelo, anoFab, velMax, cantPue, cantRue)
         {
-            if(modelo != null && anoFab > 1885 && 
+            if(modelo != null && modelo != "" && anoFab > 1885 && 
                 velMax > 0 && cantPue > -1 && cantRue > 0)
                {
                     return false
@@ -661,6 +660,7 @@
 
                             console.log(nuevoAereo);
                             actualizarTabla($divTabla, vehiculos);
+                            limpiarInput();
                         }
                         else
                         {
@@ -676,6 +676,7 @@
                             nuevoTerrestre ={modelo: modelo, anoFab: parseInt(anoFab), velMax: parseInt(velMax), cantPue: parseInt(cantPue), cantRue: parseInt(cantRue)};
                             crearVehiculo(nuevoTerrestre);
                             console.log(nuevoTerrestre);
+                            limpiarInput();
                         }
                         else{
                             console.log("datos invalidos");
@@ -708,6 +709,7 @@
                                 nuevoAereo = new Aereo (id, modelo, parseInt(anoFab), parseInt(velMax),parseInt(altMax),parseInt(autonomia));
                                 modificarVehiculo(nuevoAereo).then(res => console.log(res));
                                 console.log(nuevoAereo);
+                                limpiarInput();
                             }
  
                         }
@@ -718,6 +720,7 @@
                                 nuevoTerrestre = new Terrestre (id, modelo, parseInt(anoFab), parseInt(velMax), parseInt(cantPue),parseInt(cantRue));
                                 modificarVehiculo(nuevoTerrestre).then(res => console.log(res));
                                 console.log(nuevoTerrestre);
+                                limpiarInput();
                             }
                             else{
                                 console.log("datos invalidos");
@@ -743,6 +746,7 @@
                                 nuevoAereo = new Aereo (id, modelo, parseInt(anoFab), parseInt(velMax),parseInt(altMax),parseInt(autonomia));
                                 eliminarVehiculo(nuevoAereo).then(res => console.log(res));
                                 console.log(nuevoAereo);
+                                limpiarInput();
                             }
  
                         }
@@ -753,6 +757,7 @@
                                 nuevoTerrestre = new Terrestre (id, modelo, parseInt(anoFab), parseInt(velMax), parseInt(cantPue),parseInt(cantRue));
                                 eliminarVehiculo(nuevoTerrestre).then(res => console.log(res));
                                 console.log(nuevoTerrestre);
+                                limpiarInput();
                             }
                             else{
                                 console.log("datos invalidos");
@@ -1001,6 +1006,18 @@
 
         function ocultarSpinner() {
         document.getElementById("spinner-container").style.display = "none";
+        }
+        function limpiarInput()
+        {
+            document.getElementById("txtId").value = "";
+            document.getElementById("txtModelo").value= "";
+            document.getElementById("txtAnoFab").value= "";
+            document.getElementById("velMax").value= "";
+            document.getElementById("txtAltMax").value= "";
+            document.getElementById("txtAutonomia").value= "";
+            document.getElementById("txtCantPue").value= "";
+            document.getElementById("txtCantRue").value= "";
+            $btnEnviar.value = "Guardar";
         }
 
         
